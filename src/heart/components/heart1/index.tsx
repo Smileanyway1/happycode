@@ -104,41 +104,42 @@ const HeartAnimation1: React.FC = () => {
     }
   };
 
-  const drawFlowers = (
-    ctx: CanvasRenderingContext2D,
-    canvas: HTMLCanvasElement
-  ) => {
-    for (let i = 0; i < flowersRef.current.length; i++) {
-      let f = flowersRef.current[i];
-      ctx.fillStyle = f.color;
-      ctx.beginPath();
-      ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
-      ctx.fill();
-      f.x += f.speedX;
-      f.y += f.speedY;
-      if (f.y < -10) {
-        f.y = canvas.height + 10;
-        f.x = Math.random() * canvas.width;
-      }
-    }
-  };
-
-  const animate = () => {
-    const canvas = canvasRef.current;
-    const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if (melting) drawFlowers(ctx, canvas);
-    requestAnimationFrame(animate);
-  };
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (canvas) {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
+
+    const drawFlowers = (
+      ctx: CanvasRenderingContext2D,
+      canvas: HTMLCanvasElement
+    ) => {
+      for (let i = 0; i < flowersRef.current.length; i++) {
+        let f = flowersRef.current[i];
+        ctx.fillStyle = f.color;
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
+        ctx.fill();
+        f.x += f.speedX;
+        f.y += f.speedY;
+        if (f.y < -10) {
+          f.y = canvas.height + 10;
+          f.x = Math.random() * canvas.width;
+        }
+      }
+    };
+
+    const animate = () => {
+      const canvas = canvasRef.current;
+      const ctx = canvas?.getContext("2d");
+      if (!canvas || !ctx) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (melting) drawFlowers(ctx, canvas);
+      requestAnimationFrame(animate);
+    };
+
     animate();
   }, [melting]);
 
@@ -166,9 +167,7 @@ const HeartAnimation1: React.FC = () => {
               ? "translate(-50%, -50%) scale(5)"
               : "translate(-50%, -50%) scale(0)",
           }}
-        >
-          ssss
-        </div>
+        />
       )}
       <div
         style={{
